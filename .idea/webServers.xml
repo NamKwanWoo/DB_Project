@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f7740a45-932e-41b7-97f1-b03b1946f547" name="EC2" url="http://ec2-13-124-78-217.ap-northeast-2.compute.amazonaws.com">
+        <fileTransfer host="ec2-13-124-78-217.ap-northeast-2.compute.amazonaws.com" port="22" privateKey="$USER_HOME$/STUDY/STUDY/Keyfile/ec2_Seoul.pem" rootFolder="/home/ubuntu" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
