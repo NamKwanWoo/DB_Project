@@ -40,6 +40,9 @@ if select == "Consumer":
             Address = input("Address: ")
             Birth = input("Birth Day: ")
             Sex = input("Sex: ")
+
+
+
             try:
                 db = pymysql.connect(host=config.host,
                                      user=config.user,
@@ -52,20 +55,19 @@ if select == "Consumer":
                     sql = "INSERT INTO Person (NamDB.Person.UserID, NamDB.Person.Password, NamDB.Person.Name, NamDB.Person.Email, NamDB.Person.Phone, NamDB.Person.Address) VALUES (%s, %s, %s, %s, %s, %s) "
                     cursor.execute(sql,
                                    (str(userID), str(passWord), str(Name), str(Email), str(Phone_number), str(Address)))
-                    sql = "INSERT INTO Person_Consumer (UserID, Birth, Sex) VALUES (%s, %s, %s)"
-                    cursor.execute(sql, str(userID), str(Birth), str(Sex))
 
                     db.commit()
                     db.close()
                 except Exception as e:
                     print(e)
                     logging.warning('commit failed')
+
             except Exception as e:
                 print(e)
                 logging.error('connection failed')
 
         elif menu == 2:
-            print("Display all products")
+            print("\nDisplay all products")
             print("You will able to purchase products")
             try:
                 db = pymysql.connect(host=config.host,
@@ -91,7 +93,7 @@ if select == "Consumer":
                 logging.error('connection failed')
 
         elif menu == 3:
-            print("Add Bookmark")
+            print("\nAdd Bookmark")
             try:
                 db = pymysql.connect(host=config.host,
                                      user=config.user,
@@ -115,7 +117,7 @@ if select == "Consumer":
                 print(e)
                 logging.error('connection failed')
         elif menu == 4:
-            print("Add comment")
+            print("\nAdd comment")
             try:
                 db = pymysql.connect(host=config.host,
                                      user=config.user,
@@ -153,7 +155,8 @@ elif select == "Seller":
         print("1. Reister Seller ID")
         print("2. Upload Products")
         print("3. Display all products")
-        print("4. Exit")
+        print("4. Display all Users")
+        print("5. Exit")
 
         menu = int(input())
 
@@ -182,7 +185,7 @@ elif select == "Seller":
                     cursor.execute(sql,
                                    (str(userID), str(passWord), str(Name), str(Email), str(Phone_number), str(Address)))
                     sql = "INSERT INTO Person_Seller (UserID, CompanyID, CompanyName) VALUES (%s, %s, %s)"
-                    cursor.execute(sql, str(userID), str(companyID), str(companyName))
+                    cursor.execute(sql, (str(userID), str(companyID), str(companyName)))
 
                     db.commit()
                     db.close()
@@ -194,7 +197,7 @@ elif select == "Seller":
                 logging.error('connection failed')
 
         elif menu == 2:
-            print("Upload Products\n")
+            print("\nUpload Products\n")
             id = input("Product ID: ")
             sel_ID = input("Seller ID: ")
             category = input("Category: ")
@@ -227,7 +230,7 @@ elif select == "Seller":
                 logging.error('connection failed')
 
         elif menu == 3:
-            print("Display all products")
+            print("\nDisplay all products")
             print("You will able to purchase products")
             try:
                 db = pymysql.connect(host=config.host,
@@ -251,6 +254,30 @@ elif select == "Seller":
             except Exception as e:
                 print(e)
                 logging.error('connection failed')
-
         elif menu == 4:
+            print("\nDisplay all Users")
+
+            try:
+                db = pymysql.connect(host=config.host,
+                                     user=config.user,
+                                     password=config.pw,
+                                     db=config.dbname,
+                                     charset='utf8',
+                                     cursorclass=pymysql.cursors.DictCursor)
+                cursor = db.cursor()
+                try:
+                    sql = "SELECT * FROM Person"
+                    cursor.execute(sql)
+                    for row in cursor:
+                        print(cursor.fetchone())
+
+                    db.commit()
+                    db.close()
+                except Exception as e:
+                    print(e)
+                    logging.warning('commit failed')
+            except Exception as e:
+                print(e)
+                logging.error('connection failed')
+        elif menu == 5:
             break
