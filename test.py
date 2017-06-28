@@ -152,7 +152,7 @@ elif select == "Seller":
     while True:
         print("1. Reister Seller ID")
         print("2. Upload Products")
-        print("3. Register product comment")
+        print("3. Display all products")
         print("4. Exit")
 
         menu = int(input())
@@ -226,7 +226,31 @@ elif select == "Seller":
                 print(e)
                 logging.error('connection failed')
 
+        elif menu == 3:
+            print("Display all products")
+            print("You will able to purchase products")
+            try:
+                db = pymysql.connect(host=config.host,
+                                     user=config.user,
+                                     password=config.pw,
+                                     db=config.dbname,
+                                     charset='utf8',
+                                     cursorclass=pymysql.cursors.DictCursor)
+                cursor = db.cursor()
+                try:
+                    sql = "SELECT * FROM Online_Products"
+                    cursor.execute(sql)
+                    for row in cursor:
+                        print(cursor.fetchone())
 
+                    db.commit()
+                    db.close()
+                except Exception as e:
+                    print(e)
+                    logging.warning('commit failed')
+            except Exception as e:
+                print(e)
+                logging.error('connection failed')
 
         elif menu == 4:
             break
