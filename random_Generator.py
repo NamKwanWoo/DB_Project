@@ -5,7 +5,7 @@ def baseN(num,b,numerals="0123456789abcdefghijklmnopqrstuvwxyz"):
 
 print ("ID, personal_Phone, e-mail")
 
-for internalID in range(1,231):
+for internalID in range(1,21):
     mangled = (internalID*1679979167)%(36**6)
     #print (internalID, mangled + (internalID*167997)%(36**3), baseN(mangled,36) + '@' + baseN(mangled,36) + '.com')
-    print(baseN(mangled,36) + ' GU ' + baseN(mangled,25) + ' Dong')
+    print(mangled)
