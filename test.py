@@ -12,50 +12,61 @@ import db_config as config
 # 5. 판매자가 상품 배송 방식 정하기
 # 6. 구매자가 구매 상품 정보 보기
 
-print("Welcome To Internet Shopping Web Site\n\n")
-print("================ Select ================")
+print("\nWelcome To Internet Shopping Web Site")
+print("================ User Type ================")
 print("1. Consumer  2. Seller")
 
 select = input()
-print(select)
 
-if select :
-    print("\n\n ")
-    print("[Consumer]")
+if select == "Consumer":
+    print("\n\t[Consumer]")
+
     while True:
         print("1. Register Web site")
         print("2. Display all products")
         print("3. Add Bookmark")
         print("4. Register product comment")
         print("5. Exit")
-        menu = input()
-        if(menu == 5):
-            break
 
-        try:
-            db = pymysql.connect(host=config.host,
-                                 user=config.user,
-                                 password=config.pw,
-                                 db=config.dbname,
-                                 charset='utf8',
-                                 cursorclass=pymysql.cursors.DictCursor)
-            cursor = db.cursor()
+        menu = int(input())
+
+        if menu == 1:
+            print("\n\t[Register User]")
+            userID = input("User ID")
+            passWord = input("p")
             try:
-                # sql = "INSERT INTO Test (ID) VALUES (%s)"
-                # sql = ('select ID ''From Test')
-                # cursor.execute(sql)
-                db.commit()
-                db.close()
+                db = pymysql.connect(host=config.host,
+                                     user=config.user,
+                                     password=config.pw,
+                                     db=config.dbname,
+                                     charset='utf8',
+                                     cursorclass=pymysql.cursors.DictCursor)
+                cursor = db.cursor()
+                try:
+                    # sql = "INSERT INTO Test (ID) VALUES (%s)"
+                    # sql = ('select ID ''From Test')
+                    # cursor.execute(sql)
+                    db.commit()
+                    db.close()
+                except Exception as e:
+                    print(e)
+                    logging.warning('commit failed')
             except Exception as e:
                 print(e)
-                logging.warning('commit failed')
-        except Exception as e:
-            print(e)
-            logging.error('connection failed')
+                logging.error('connection failed')
 
-elif select == 2:
-    print("\n\n ")
-    print("[Seller]")
+        elif menu == 2:
+            print("Display all products")
+        elif menu == 3:
+            print("Add Bookmark")
+        elif menu == 4:
+            print("add comment")
+        elif menu == 5:
+            break
+
+
+elif select == "Seller":
+    print("\n\t[Seller]")
 
     while True:
         print("1. Display all products")
@@ -63,7 +74,7 @@ elif select == 2:
         print("3. Register product comment")
         print("4. Exit")
 
-        menu = input()
+        menu = int(input())
 
-        if (menu == 4):
+        if menu == 4:
             break
